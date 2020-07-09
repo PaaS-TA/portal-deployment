@@ -1,0 +1,41 @@
+# STEMCELL INFO
+stemcell_os: "ubuntu-xenial"                                             # stemcell os
+stemcell_version: "315.64"                                               # stemcell version
+
+# NETWORKS INFO
+private_networks_name: "default"                                         # private network name
+public_networks_name: "vip"                                              # public network name
+
+# MARIADB INFO
+mariadb_azs: [z6]                                                        # mariadb : azs
+mariadb_instances: 1                                                     # mariadb : instances (1)
+mariadb_vm_type: "minimal"                                               # mariadb : vm type
+mariadb_persistent_disk_type: "10GB"                                     # mariadb : persistent disk type
+mariadb_port: "<MARIADB_PORT>"                                           # mariadb : database port (e.g. 3306)
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                       # mariadb : database admin password (e.g. "mariadb")
+
+# HAPROXY INFO
+haproxy_azs: [z7]                                                        # haproxy : azs
+haproxy_instances: 1                                                     # haproxy : instances (1)
+haproxy_vm_type: "small"                                                 # haproxy : vm type
+haproxy_public_ips: "<HAPROXY_PUBLIC_IPS>"                               # haproxy : public ips (e.g. "00.00.00.00")
+haproxy_infra_admin: false                                               # haproxy : infra admin (default "false")
+
+# PORTAL_WEBADMIN INFO
+webadmin_azs: [z6]                                                       # webadmin : azs
+webadmin_instances: 1                                                    # webadmin : instances (1)
+webadmin_vm_type: "small"                                                # webadmin : vm type
+
+# PORTAL_WEBUSER INFO
+webuser_azs: [z6]                                                        # webuser : azs
+webuser_instances: 1                                                     # webuser : instances (1)
+webuser_vm_type: "small"                                                 # webuser : vm type
+webuser_monitoring: false                                                # webuser : monitoring 사용 여부. true일 경우 앱 상세정보에서 모니터링창이 활성화 된다.
+webuser_quantity: false                                                  # webuser : 사용량 조회 창 활성화 여부
+webuser_automaticapproval: false                                         # webuser : 회원가입시 PaaS-TA에 접속 가능 여부. true일 경우 관리자 포탈에서 승인을 해주어야 접근이 가능하다.
+
+# ETC INFO
+portal_default_api_name: "PaaS-TA 5.0"                                   # ETC : default api name
+portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
+portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="             # ETC : default header auth
+portal_default_api_desc: "PaaS-TA 5.0 install infra"                     # ETC : default api description

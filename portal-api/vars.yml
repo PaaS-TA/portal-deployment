@@ -1,0 +1,78 @@
+# STEMCELL INFO
+stemcell_os: "ubuntu-xenial"                                    # stemcell os
+stemcell_version: "315.64"                                      # stemcell version
+
+# NETWORKS INFO
+private_networks_name: "default"                                # private network name
+public_networks_name: "vip"                                     # public network name
+
+# MARIADB INFO
+mariadb_azs: [z6]                                               # mariadb : azs
+mariadb_instances: 1                                            # mariadb : instances (1) 
+mariadb_vm_type: "minimal"                                      # mariadb : vm type
+mariadb_persistent_disk_type: "10GB"                            # mariadb : persistent disk type
+mariadb_port: "<MARIADB_PORT>"                                  # mariadb : database port (e.g. 3306)
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Paasta@2019")
+
+# HAPROXY INFO
+haproxy_azs: [z7]                                               # haproxy : azs
+haproxy_instances: 1                                            # haproxy : instances (1)
+haproxy_vm_type: "small"                                        # haproxy : vm type
+haproxy_public_ips: "<HAPROXY_PUBLIC_IPS>"                      # haproxy : public ips (e.g. "00.00.00.00")
+haproxy_infra_admin: false                                      # haproxy : infra admin (default "false")
+
+# BINARY_STORAGE INFO
+binary_storage_azs: [z6]                                        # binary storage : azs
+binary_storage_instances: 1                                     # binary storage : instances (1)
+binary_storage_vm_type: "minimal"                               # binary storage : vm type
+binary_storage_persistent_disk_type: "10GB"                     # binary storage : persistent disk type
+binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "paasta-portal")
+binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "paasta")
+binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "paasta-portal")
+binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "paasta@paasta.com")
+
+# PORTAL_GATEWAY INFO
+gateway_azs: [z6]                                               # gateway : azs
+gateway_instances: 1                                            # gateway : instances (1)
+gateway_vm_type: "small"                                        # gateway : vm type
+
+# PORTAL_REGISTRATION INFO
+registration_azs: [z6]                                          # registration : azs
+registration_instances: 1                                       # registration : instances (1)
+registration_vm_type: "small"                                   # registration : vm type
+registration_infra_admin: false                                 # registration : infra admin (default "false")
+
+# PORTAL_API INFO
+api_azs: [z6]                                                   # portal-api : azs
+api_instances: 1                                                # portal-api : instances (1)
+api_vm_type: "minimal"                                          # portal-api : vm type
+api_infra_admin: false                                          # portal-api : infra admin (default "false")
+
+# PORTAL_COMMON_API INFO
+common_api_azs: [z6]                                            # portal-common-api : azs
+common_api_instances: 1                                         # portal-common-api : instances (1)
+common_api_vm_type: "small"                                     # portal-common-api : vm type
+common_api_infra_admin: false                                   # portal-common-api : infra admin (default "false")
+
+# PORTAL_STORAGE_API INFO
+storage_api_azs: [z6]                                           # portal-storage-api : azs
+storage_api_instances: 1                                        # portal-storage-api : instances (1)
+storage_api_vm_type: "small"                                    # portal-storage-api : vm type
+storage_api_infra_admin: false                                  # portal-storage-api : infra admin (default "false")
+
+# PORTAL_LOG_API INFO
+log_api_azs: [z6]                                               # portal-log-api : azs
+log_api_instances: 1                                            # portal-log-api : instances (1)
+log_api_vm_type: "small"                                        # portal-log-api : vm type
+log_api_infra_admin: false                                      # portal-log-api : infra admin (default "false")
+
+# MAIL_SMTP INFO
+mail_smtp_host: "<MAIL_SMTP_HOST>"                              # mail-smtp : host (e.g. "smtp.gmail.com")
+mail_smtp_port: "<MAIL_SMTP_PORT>"                              # mail-smtp : port (e.g. "465")
+mail_smtp_username: "<MAIL_SMTP_USERNAME>"                      # mail-smtp : user name
+mail_smtp_password: "<MAIL_SMTP_PASSWORD>"                      # mail-smtp : password
+mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : user email
+mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
+mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
+mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
+mail_smtp_properties_subject: "MAIL_SMTP_PROPERTIES_SUBJECT"    # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
