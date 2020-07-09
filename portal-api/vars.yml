@@ -75,4 +75,4 @@ mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : us
 mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
 mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
 mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
-mail_smtp_properties_subject: "MAIL_SMTP_PROPERTIES_SUBJECT"    # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"    # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
