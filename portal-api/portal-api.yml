@@ -136,7 +136,7 @@ instance_groups:
       url: ((abacus_url))
     monitoring:
       api:
-        url: ((monitoring_api_url))
+        url: "http://monitoring.((monitoring_api_url))"
     infra:
       admin:
         enable: ((api_infra_admin))
