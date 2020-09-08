@@ -11,7 +11,7 @@ infra_azs: [z7]                                                 # infra : public
 infra_instances: 1                                              # infra : instances (1) 
 infra_vm_type: "large"                                          # infra : vm type
 infra_persistent_disk_type: "10GB"                              # infra : persistent disk type
-infra_public_ips: "3.34.251.196"                                # infra : public ips
+infra_public_ips: "<INFRA_PUBLIC_IPS>"                                # infra : public ips
 
 
 # MARIADB INFO
@@ -19,10 +19,10 @@ mariadb_port: "3306"                                            # mariadb : data
 mariadb_admin_password: "Paasta@2019"                           # mariadb : database admin password (e.g. "Paasta@2019")
 
 # BINARY_STORAGE INFO
-binary_storage_username: "paasta-portal"                        # binary storage : username (e.g. "paasta-portal")
-binary_storage_password: "paasta"                               # binary storage : password (e.g. "paasta")
-binary_storage_tenantname: "paasta-portal"                      # binary storage : tenantname (e.g. "paasta-portal")
-binary_storage_email: "paastatest@paasta.com"                   # binary storage : email (e.g. "paasta@paasta.com")
+binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "paasta-portal")
+binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "paasta")
+binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "paasta-portal")
+binary_storage_email: "<BINARY_STORAGE_EMAIL>"                  # binary storage : email (e.g. "paasta@paasta.com")
 
 # PORTAL_REGISTRATION INFO
 registration_infra_admin: false                                 # registration : infra admin (default "false")
@@ -40,18 +40,18 @@ storage_api_infra_admin: false                                  # portal-storage
 log_api_infra_admin: false                                      # portal-log-api : infra admin (default "false")
 
 # MAIL_SMTP INFO
-mail_smtp_host: "smtp.gmail.com"                                # mail-smtp : host (e.g. "smtp.gmail.com")
-mail_smtp_port: "465"                                           # mail-smtp : port (e.g. "465")
-mail_smtp_username: "portal"                                    # mail-smtp : user name
-mail_smtp_password: "portal_admin"                              # mail-smtp : password
-mail_smtp_useremail: "portaltest@paasta.kr"                     # mail-smtp : user email
+mail_smtp_host: "<MAIL_SMTP_HOST>"                              # mail-smtp : host (e.g. "smtp.gmail.com")
+mail_smtp_port: "<MAIL_SMTP_PORT>"                              # mail-smtp : port (e.g. "465")
+mail_smtp_username: "<MAIL_SMTP_USERNAME>"                      # mail-smtp : user name
+mail_smtp_password: "<MAIL_SMTP_PASSWORD>"                      # mail-smtp : password
+mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : user email
 mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
 mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
 mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
-mail_smtp_properties_subject: "PaaS-TA User Potal"              # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
 
 # ETC INFO
 portal_default_api_name: "PaaS-TA 5.0"                          # ETC : default api name
-portal_default_api_url: "http://3.34.251.196:2225"              # ETC : default api url
+portal_default_api_url: "http://<INFRA_PUBLIC_IPS>:2225"        # ETC : default api url (e.g. "http://<INFRA_PUBLIC_IPS>:2225")
 portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="    # ETC : default header auth
 portal_default_api_desc: "PaaS-TA 5.0 install infra"            # ETC : default api description
