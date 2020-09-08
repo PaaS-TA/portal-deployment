@@ -1,0 +1,57 @@
+# STEMCELL INFO
+stemcell_os: "ubuntu-xenial"                                    # stemcell os
+stemcell_version: "315.64"                                      # stemcell version
+
+# NETWORKS INFO
+private_networks_name: "default"                                # private network name
+public_networks_name: "vip"                                     # public network name
+
+# PORTAL-INFRA INFO
+infra_azs: [z7]                                                 # infra : public azs
+infra_instances: 1                                              # infra : instances (1) 
+infra_vm_type: "large"                                          # infra : vm type
+infra_persistent_disk_type: "10GB"                              # infra : persistent disk type
+infra_public_ips: "3.34.251.196"                                # infra : public ips
+
+
+# MARIADB INFO
+mariadb_port: "3306"                                            # mariadb : database port (e.g. 3306)
+mariadb_admin_password: "Paasta@2019"                           # mariadb : database admin password (e.g. "Paasta@2019")
+
+# BINARY_STORAGE INFO
+binary_storage_username: "paasta-portal"                        # binary storage : username (e.g. "paasta-portal")
+binary_storage_password: "paasta"                               # binary storage : password (e.g. "paasta")
+binary_storage_tenantname: "paasta-portal"                      # binary storage : tenantname (e.g. "paasta-portal")
+binary_storage_email: "paastatest@paasta.com"                   # binary storage : email (e.g. "paasta@paasta.com")
+
+# PORTAL_REGISTRATION INFO
+registration_infra_admin: false                                 # registration : infra admin (default "false")
+
+# PORTAL_API INFO
+api_infra_admin: false                                          # portal-api : infra admin (default "false")
+
+# PORTAL_COMMON_API INFO
+common_api_infra_admin: false                                   # portal-common-api : infra admin (default "false")
+
+# PORTAL_STORAGE_API INFO
+storage_api_infra_admin: false                                  # portal-storage-api : infra admin (default "false")
+
+# PORTAL_LOG_API INFO
+log_api_infra_admin: false                                      # portal-log-api : infra admin (default "false")
+
+# MAIL_SMTP INFO
+mail_smtp_host: "smtp.gmail.com"                                # mail-smtp : host (e.g. "smtp.gmail.com")
+mail_smtp_port: "465"                                           # mail-smtp : port (e.g. "465")
+mail_smtp_username: "portal"                                    # mail-smtp : user name
+mail_smtp_password: "portal_admin"                              # mail-smtp : password
+mail_smtp_useremail: "portaltest@paasta.kr"                     # mail-smtp : user email
+mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
+mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
+mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
+mail_smtp_properties_subject: "PaaS-TA User Potal"              # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+
+# ETC INFO
+portal_default_api_name: "PaaS-TA 5.0"                          # ETC : default api name
+portal_default_api_url: "http://3.34.251.196:2225"              # ETC : default api url
+portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="    # ETC : default header auth
+portal_default_api_desc: "PaaS-TA 5.0 install infra"            # ETC : default api description
