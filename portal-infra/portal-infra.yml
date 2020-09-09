@@ -8,7 +8,7 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: http://45.248.73.44/index.php/s/st4RkHceTieJbFt/download
+  url: http://45.248.73.44/index.php/s/aKHrCy8MaAdfyPW/download
   version: "2.0-min"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
