@@ -11,7 +11,7 @@ mariadb_azs: [z6]                                                        # maria
 mariadb_instances: 1                                                     # mariadb : instances (1)
 mariadb_vm_type: "minimal"                                               # mariadb : vm type
 mariadb_persistent_disk_type: "10GB"                                     # mariadb : persistent disk type
-mariadb_port: "<MARIADB_PORT>"                                           # mariadb : database port (e.g. 3306)
+mariadb_port: "<MARIADB_PORT>"                                           # mariadb : database port (e.g. 13306) -- Do Not Use "3306"
 mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"                       # mariadb : database admin password (e.g. "mariadb")
 
 # HAPROXY INFO

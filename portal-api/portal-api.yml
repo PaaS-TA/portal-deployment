@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: http://45.248.73.44/index.php/s/aPDtTyQSxiqZGRS/download
-  version: "2.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: http://45.248.73.44/index.php/s/fYA8JBx45pKxWrD/download
+  version: "2.0.1"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -210,7 +210,7 @@ instance_groups:
         tenantName: ((binary_storage_tenantname))
         username: ((binary_storage_username))
         password: ((binary_storage_password))
-        authUrl: http://((binary_storage_ips)):5000/v2.0/tokens
+        authUrl: http://((binary_storage_ips)):((binary_storage_auth_port))/v2.0/tokens
         authMethod: keystone
         preferredRegion: Public
         container: portal-container
@@ -263,7 +263,7 @@ properties:
     - mariadb0
   binary_storage:                                           # BINARY STORAGE SERVER 설정 정보
     proxy_port: 10008                                       # 프록시 서버 Port(Object Storage >접속 Port)
-    auth_port: 5000
+    auth_port: ((binary_storage_auth_port))                 # keystone auth port
     username:                                               # 최초 생성되는 유저이름(Object Storage 접속 유저이름)
     - ((binary_storage_username))
     password:                                               # 최초 생성되는 유저 비밀번호(Object Storage 접속 유저 비밀번호)
