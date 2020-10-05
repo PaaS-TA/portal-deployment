@@ -11,14 +11,15 @@ infra_azs: [z7]                                                 # infra : public
 infra_instances: 1                                              # infra : instances (1) 
 infra_vm_type: "large"                                          # infra : vm type
 infra_persistent_disk_type: "10GB"                              # infra : persistent disk type
-infra_public_ips: "<INFRA_PUBLIC_IPS>"                                # infra : public ips
+infra_public_ips: "<INFRA_PUBLIC_IPS>"                          # infra : public ips
 
 
 # MARIADB INFO
-mariadb_port: "3306"                                            # mariadb : database port (e.g. 3306)
-mariadb_admin_password: "Paasta@2019"                           # mariadb : database admin password (e.g. "Paasta@2019")
+mariadb_port: "<MARIADB_PORT>"                                  # mariadb : database port (e.g. 13306) -- Do Not Use "3306"
+mariadb_admin_password: "<MARIADB_ADMIN_PASSWORD>"              # mariadb : database admin password (e.g. "Paasta@2019")
 
 # BINARY_STORAGE INFO
+binary_storage_auth_port: "<BINARY_STORAGE_AUTH_PORT>"          # binary storage : keystone port (e.g. 15001) -- Do Not Use "5000"
 binary_storage_username: "<BINARY_STORAGE_USERNAME>"            # binary storage : username (e.g. "paasta-portal")
 binary_storage_password: "<BINARY_STORAGE_PASSWORD>"            # binary storage : password (e.g. "paasta")
 binary_storage_tenantname: "<BINARY_STORAGE_TENANTNAME>"        # binary storage : tenantname (e.g. "paasta-portal")
