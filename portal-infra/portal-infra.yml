@@ -95,7 +95,7 @@ instance_groups:
           password: ((paasta_cc_db_password))
         portal:
           driver-class-name: com.mysql.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/portaldb
+          url: jdbc:mysql://127.0.0.1:((mariadb_port))/portaldb
           username: root
           password: "((mariadb_admin_password))"
         uaa:
