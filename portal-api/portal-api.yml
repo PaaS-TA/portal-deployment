@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: http://45.248.73.44/index.php/s/fYA8JBx45pKxWrD/download
-  version: "2.0.1"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: http://45.248.73.44/index.php/s/jnQeLgN2ZRwQL9F/download
+  version: "2.1.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -214,6 +214,10 @@ instance_groups:
         authMethod: keystone
         preferredRegion: Public
         container: portal-container
+        user:
+            app:
+              size:
+                mb: 0    # user app upload size : 0 (무제한)
     infra:
       admin:
         enable: ((storage_api_infra_admin))
