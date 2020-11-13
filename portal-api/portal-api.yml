@@ -156,8 +156,8 @@ instance_groups:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     datasource:
       cc:
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://((paasta_database_ips)):((paasta_database_port))/cloud_controller
+        driver-class-name: ((paasta_database_driver_class))
+        url: jdbc:((paasta_database_type))://((paasta_database_ips)):((paasta_database_port))/((paasta_cc_db_id))
         username: ((paasta_cc_db_id))
         password: ((paasta_cc_db_password))
       portal:
@@ -165,8 +165,8 @@ instance_groups:
         username: root
         password: "((mariadb_admin_password))"
       uaa:
-        driver-class-name: org.postgresql.Driver
-        url: jdbc:postgresql://((paasta_database_ips)):((paasta_database_port))/uaa
+        driver-class-name: ((paasta_database_driver_class))
+        url: jdbc:((paasta_database_type))://((paasta_database_ips)):((paasta_database_port))/((paasta_uaa_db_id))
         username: ((paasta_uaa_db_id))
         password: ((paasta_uaa_db_password))
     mail:
