@@ -1,0 +1,59 @@
+---
+name: portal-container-infra
+
+stemcells:
+- alias: default
+  os: ((stemcell_os))
+  version: "((stemcell_version))"
+
+releases:
+- name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
+  url: http://45.248.73.44/index.php/s/wWK764XYdHTAbwt/download
+  version: "2.2.0-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+
+update:
+  canaries: 1                                               # canary 인스턴스 수(필수)
+  canary_watch_time: 5000-120000                            # canary 인스턴스가 수행하기 위한 대기 시간(필수)
+  update_watch_time: 5000-120000                            # non-canary 인스턴스가 수행하기 위한 대기 시간(필수)
+  max_in_flight: 1                                          # non-canary 인스턴스가 병렬로 update 하는 최대 개수(필수)
+  serial: false
+
+instance_groups:
+- name: infra
+  azs: ((infra_azs))
+  instances: ((infra_instances))
+  vm_type: ((infra_vm_type))
+  stemcell: "default"
+  persistent_disk_type: ((infra_persistent_disk_type))
+  networks:
+  - name: ((private_networks_name))
+    default: [dns, gateway]
+  jobs:
+  - name: mariadb
+    release: "paasta-portal-api-release"
+    properties:
+      mariadb:
+        port: ((mariadb_port))
+        admin_user:
+          password: '((mariadb_admin_password))'
+      portal_default:
+        name: "((portal_default_api_name))"
+        url: "((portal_default_api_url))"
+        uaa_url: "https://uaa.((system_domain))"
+        header_auth: "((portal_default_header_auth))"
+        desc: "((portal_default_api_desc))"
+
+  - name: binary_storage
+    release: "paasta-portal-api-release"
+    properties:
+      binary_storage:
+        proxy_port: 10008
+        auth_port: ((binary_storage_auth_port))
+        username:
+        - ((binary_storage_username))
+        password:
+        - ((binary_storage_password))
+        tenantname:
+        - ((binary_storage_tenantname))
+        email:
+        - ((binary_storage_email))

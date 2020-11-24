@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: http://45.248.73.44/index.php/s/jnQeLgN2ZRwQL9F/download
-  version: "2.1.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: http://45.248.73.44/index.php/s/MoffHNFTTLfS7Wd/download
+  version: "2.2.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -30,7 +30,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: mariadb
-    release: "paasta-portal-api-release" 
+    release: "paasta-portal-api-release"
   syslog_aggregator: null
 
 - name: haproxy
@@ -231,7 +231,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: paas-ta-portal-log-api
-    release: "paasta-portal-api-release" 
+    release: "paasta-portal-api-release"
   syslog_aggregator: null
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"

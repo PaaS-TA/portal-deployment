@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: paasta-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: http://45.248.73.44/index.php/s/gqmim6yZ5emjYtM/download
-  version: "2.1.0"                                         # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: http://45.248.73.44/index.php/s/FqygsF7pE3DS7Cf/download
+  version: "2.2.0"                                         # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -30,7 +30,7 @@ instance_groups:
   - name: ((private_networks_name))
   jobs:
   - name: mariadb
-    release: paasta-portal-ui-release 
+    release: paasta-portal-ui-release
   syslog_aggregator: null
 
 - name: haproxy
