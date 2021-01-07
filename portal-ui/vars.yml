@@ -1,6 +1,6 @@
 # STEMCELL INFO
 stemcell_os: "ubuntu-xenial"                                             # stemcell os
-stemcell_version: "315.64"                                               # stemcell version
+stemcell_version: "621.94"                                               # stemcell version
 
 # NETWORKS INFO
 private_networks_name: "default"                                         # private network name
@@ -33,6 +33,7 @@ webuser_vm_type: "small"                                                 # webus
 webuser_monitoring: false                                                # webuser : monitoring 사용 여부. true일 경우 앱 상세정보에서 모니터링창이 활성화 된다.
 webuser_quantity: false                                                  # webuser : 사용량 조회 창 활성화 여부
 webuser_automaticapproval: false                                         # webuser : 회원가입시 PaaS-TA에 접속 가능 여부. true일 경우 관리자 포탈에서 승인을 해주어야 접근이 가능하다.
+user_app_size: 0                                                         # webuser : 사용자 myApp 배포시 용량제한 여부 (값이 0일경우 무제한)
 
 # ETC INFO
 portal_default_api_name: "PaaS-TA 5.0"                                   # ETC : default api name
