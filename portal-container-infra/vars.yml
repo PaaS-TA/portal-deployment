@@ -1,6 +1,6 @@
 # STEMCELL INFO
 stemcell_os: "ubuntu-xenial"                                    # stemcell os
-stemcell_version: "315.64"                                      # stemcell version
+stemcell_version: "621.94"                                      # stemcell version
 
 # NETWORKS INFO
 private_networks_name: "default"                                # private network name
