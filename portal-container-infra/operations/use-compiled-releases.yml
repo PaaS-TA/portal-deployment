@@ -1,7 +1,10 @@
 - type: replace
-  path: /releases/name=paasta-portal-api-release/url
-  value: file:///home/((inception_os_user_name))/workspace/paasta-5.0/release/portal/paasta-portal-api-release-2.3.0-ctn.tgz
-
-- type: replace
-  path: /releases/name=paasta-portal-api-release/version
-  value: "2.3.0-ctn"
+  path: /releases/name=paasta-portal-api-release
+  value:
+    name: paasta-portal-api-release
+    sha1: 569c6260cee66a1e6e002f26a76073216a7518c3
+    stemcell:
+      os: ubuntu-xenial
+      version: "621.94"
+    url: http://45.248.73.44/index.php/s/Cm99ey3n26iZ2Me/download
+    version: 2.3.0-ctn
