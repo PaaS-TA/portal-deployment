@@ -9,7 +9,7 @@ stemcells:
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.paas-ta.org/index.php/s/im9LWHZGs9aaP2d/download
-  version: "2.4.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  version: "2.5.0"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -161,7 +161,7 @@ instance_groups:
         username: ((paasta_cc_db_id))
         password: ((paasta_cc_db_password))
       portal:
-        driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: org.mariadb.jdbc.Driver
         username: root
         password: "((mariadb_admin_password))"
       uaa:

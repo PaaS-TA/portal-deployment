@@ -40,3 +40,5 @@ portal_default_api_name: "PaaS-TA 5.5.1"                                   # ETC
 portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
 portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="             # ETC : default header auth
 portal_default_api_desc: "PaaS-TA 5.5.1 install infra"                     # ETC : default api description
+apache_limit_request_body: <APACHE limitRequestBody>                     # Apache Limiting Upload File Size Directory / ex> 5000000
+apache_usr_limit_request_body: <APACHE limitRequestBody>                 # Apache Limiting Upload File Size Directory webDir ex> 10240000
