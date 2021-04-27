@@ -6,5 +6,6 @@ BOSH_ENVIRONMENT="${BOSH_ENVIRONMENT}"			 # bosh director alias name (PaaS-TA에
 
 # DEPLOY
 bosh -e ${BOSH_ENVIRONMENT} -n -d portal-container-infra deploy --no-redact portal-container-infra.yml \
+   -o operations/cce.yml \
    -l ${COMMON_VARS_PATH} \
    -l vars.yml
