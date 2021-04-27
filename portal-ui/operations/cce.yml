@@ -1,0 +1,9 @@
+---
+
+# CCE - portal infra patch
+- type: replace
+  path: /instance_groups/name=paas-ta-portal-webuser/properties/cce_enable?
+  value: true
+- type: replace
+  path: /properties/cce_enable?
+  value: true
