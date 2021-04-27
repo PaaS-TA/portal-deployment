@@ -1,0 +1,7 @@
+---
+
+# CCE - portal infra patch
+- type: replace
+  path: /properties/cce_enable?
+  value: true
+
