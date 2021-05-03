@@ -88,7 +88,7 @@ instance_groups:
       uaa:
         clientsecret: ((uaa_client_portal_secret))
     monitoring: ((webuser_monitoring))
-    quantity: ((webuser_quantity))
+    quantity: false
     automaticApproval: ((webuser_automaticapproval))
     ssh_uri: "https://ssh-app.((system_domain))/"
     user_app_size_mb: ((user_app_size))
