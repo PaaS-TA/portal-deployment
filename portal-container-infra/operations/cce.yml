@@ -1,0 +1,6 @@
+---
+
+# CCE - portal infra patch
+- type: replace
+  path: /instance_groups/name=infra/jobs/name=mariadb/properties/cce_enable?
+  value: true

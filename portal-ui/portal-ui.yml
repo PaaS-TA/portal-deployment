@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: paasta-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/sEF75LCgqCXgF4s/download
-  version: "2.4.0"                                         # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: https://nextcloud.paas-ta.org/index.php/s/goy2rWd9cyDBkfp/download
+  version: "2.5.0"                                         # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -88,7 +88,7 @@ instance_groups:
       uaa:
         clientsecret: ((uaa_client_portal_secret))
     monitoring: ((webuser_monitoring))
-    quantity: ((webuser_quantity))
+    quantity: false
     automaticApproval: ((webuser_automaticapproval))
     ssh_uri: "https://ssh-app.((system_domain))/"
     user_app_size_mb: ((user_app_size))
@@ -108,3 +108,5 @@ properties:
     desc: "((portal_default_api_desc))"
   cf_api_version: ((paasta_api_version))
   webadmin_ips: ((haproxy_public_ips))
+  limit_request_body: ((apache_limit_request_body))
+  usr_limit_request_body: ((apache_usr_limit_request_body))

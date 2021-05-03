@@ -8,8 +8,8 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/eKf8XWwt8Wy9HrA/download
-  version: "2.3.0-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: https://nextcloud.paas-ta.org/index.php/s/fexrDefqmj4kgys/download
+  version: "2.5.0-ctn"                                        # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -57,3 +57,7 @@ instance_groups:
         - ((binary_storage_tenantname))
         email:
         - ((binary_storage_email))
+        container:                                              # 최초 생성되는 컨테이너 이름
+        - portal-container
+        binary_desc:                                            # 최초 생성되는 컨테이너에 대한 설>명
+        - "portal binary_storage"
