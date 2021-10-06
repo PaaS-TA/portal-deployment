@@ -1,6 +1,11 @@
 ---
 
-# CCE - portal infra patch
+# CCE - portal infra mariadb patch
 - type: replace
   path: /instance_groups/name=infra/jobs/name=mariadb/properties/cce_enable?
+  value: true
+
+# CCE - portal infra binary_storage patch
+- type: replace
+  path: /instance_groups/name=infra/jobs/name=binary_storage/properties/cce_enable?
   value: true
