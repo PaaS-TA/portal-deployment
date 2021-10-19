@@ -1,7 +1,7 @@
 - type: replace
   path: /releases/name=paasta-portal-ui-release/url
-  value: file://((releases_dir))/portal/paasta-portal-ui-release-2.5.0.tgz
+  value: file://((releases_dir))/portal/paasta-portal-ui-release-2.5.1.tgz
 
 - type: replace
   path: /releases/name=paasta-portal-ui-release/version
-  value: "2.5.0"
+  value: "2.5.1"
