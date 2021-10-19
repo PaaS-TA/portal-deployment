@@ -35,9 +35,9 @@ webuser_automaticapproval: false                                         # webus
 user_app_size: 0                                                         # webuser : 사용자 myApp 배포시 용량제한 여부 (값이 0일경우 무제한)
 
 # ETC INFO
-portal_default_api_name: "PaaS-TA 5.5.1"                                   # ETC : default api name
+portal_default_api_name: "PaaS-TA"                                   # ETC : default api name (e.g. PaaS-TA {Version})
 portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
 portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="             # ETC : default header auth
-portal_default_api_desc: "PaaS-TA 5.5.1 install infra"                     # ETC : default api description
+portal_default_api_desc: "PaaS-TA infra"                     # ETC : default api description (e.g. PaaS-TA {Version} infra)
 apache_limit_request_body: <APACHE limitRequestBody>                     # Apache Limiting Upload File Size Directory / ex> 5000000
 apache_usr_limit_request_body: <APACHE limitRequestBody>                 # Apache Limiting Upload File Size Directory webDir ex> 10240000
