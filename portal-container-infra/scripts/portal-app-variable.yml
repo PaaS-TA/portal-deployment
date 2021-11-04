@@ -1,0 +1,61 @@
+#!/bin/bash
+
+##FILE PATH
+COMMON_VARS_PATH=~/workspace/common/common_vars.yml	# common_vars.yml Path
+PORTAL_INFRA_VARS_PATH=~/workspace/portal-deployment/portal-container-infra/vars.yml	# portal_infra_vars.yml Path
+PORTAL_APP_WORKING_DIRECTORY=~/workspace/portal-deployment/portal-container-infra/portal-app # Portal APP Working Path
+
+
+##PORTAL VARIABLE
+USER_APP_SIZE_MB=0					# USER My App size(MB), if value==0 -> unlimited
+MONITORING_ENABLE=false					# Monitoring Enable Option
+
+PORTAL_ORG_NAME="portal"				# PaaS-TA Portal Org Name
+PORTAL_SPACE_NAME="system"				# PaaS-TA Portal Space Name
+PORTAL_QUOTA_NAME="portal_quota"			# PaaS-TA Portal Quota Name
+PORTAL_SECURITY_GROUP_NAME="portal"			# PaaS-TA Portal Security Group Name
+
+MAIL_SMTP_HOST="smtp.gmail.com"				# Mail-SMTP Host
+MAIL_SMTP_PORT="465"					# Mail-SMTP Port
+MAIL_SMTP_USERNAME="paasta"				# Mail-SMTP User Name
+MAIL_SMTP_PASSWORD="paasta"				# Mail-SMTP Password
+MAIL_SMTP_USEREMAIL="paas-ta@gmail.com"			# Mail-SMTP User Email
+
+##PORTAL APP INSTANCES
+PORTAL_API_INSTANCE=1					# PORTAL-API INSTANCES
+PORTAL_COMMON_API_INSTANCE=1				# PORTAL-COMMON-API INSTANCES
+PORTAL_GATEWAY_INSTANCE=1				# PORTAL-GATEWAY INSTANCES
+PORTAL_REGISTRATION_INSTANCE=1				# PORTAL-REGISTRATION INSTANCES
+PORTAL_STORAGE_API_INSTANCE=1				# PORTAL-STORAGE-API INSTANCES
+PORTAL_WEB_ADMIN_INSTANCE=1				# PORTAL-WEB-ADMIN INSTANCES
+PORTAL_WEB_USER_INSTANCE=1				# PORTAL-WEB-USER INSTANCES
+
+
+##UNCHANGE VARIABLE(if defulat install, don't change variable)
+PAASTA_CORE_DEPLOYMENT_NAME="paasta"			# PaaS TA AP Deployment Name
+PORTAL_INFRA_DEPLOYMENT_NAME="portal-container-infra"	# Portal Container Infra Deployment Name
+PAASTA_DATABASE_INSTANCE_NAME="database"		# PaaS TA AP Database Instance Name
+PORTAL_INFRA_DATABASE_NAME="infra"			# Portal Container Infra Database Name
+UAA_ADMIN_CLIENT_ID="admin"				# UAA Client ID
+CC_DB_NAME="cloud_controller"				# PaaS-TA AP CCDB Name
+CC_DB_USER_NAME="cloud_controller"			# PaaS-TA AP CCDB ID
+UAA_DB_NAME="uaa"					# PaaS-TA AP UAADB Name
+UAA_DB_USER_NAME="uaa"					# PaaS-TA AP UAADB ID
+UAAC_PORTAL_CLIENT_ID="portalclient"			# UAAC Portal Client ID
+
+IS_PAAS_TA_EXTERNAL_DB=false				# (true or false)
+PAAS_TA_EXTERNAL_DB_IP=					# PaaS-TA AP External DB IP
+PAAS_TA_EXTERNAL_DB_PORT=				# PaaS-TA AP External DB Port
+PAAS_TA_EXTERNAL_DB_KIND=				# PaaS-TA AP External DB Kind(IF USE e.g. postgres or mysql)
+IS_PORTAL_EXTERNAL_DB=false				# (true or false)
+PORTAL_EXTERNAL_DB_IP=					# Portal External DB IP
+PORTAL_EXTERNAL_DB_PORT=				# Portal External DB Port
+PORTAL_EXTERNAL_DB_PASSWORD=				# Portal External DB Password
+IS_PORTAL_EXTERNAL_STORAGE=false			# (true or false)
+PORTAL_EXTERNAL_STORAGE_IP=				# Portal External Storage IP
+PORTAL_EXTERNAL_STORAGE_PORT=				# Portal External Storage Port
+PORTAL_EXTERNAL_STORAGE_TENANTNAME=			# Portal External Storage Tenant Name
+PORTAL_EXTERNAL_STORAGE_USERNAME=			# Portal External Storage Username
+PORTAL_EXTERNAL_STORAGE_PASSWORD=			# Portal External Storage Password
+
+
