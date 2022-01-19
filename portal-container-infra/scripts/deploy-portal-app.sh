@@ -87,11 +87,11 @@ if [[ ${IS_PAAS_TA_EXTERNAL_DB} = "false" ]]; then
         if [[ -n $(bosh is --ps -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | grep "postgres") ]]; then
                 PAASTA_DB_DRIVER=org.postgresql.Driver
                 PAASTA_DATABASE=postgresql
-        elif [[ -n $(bosh is --ps -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | grep "pxc") ]]; then
+        elif [[ -n $(bosh is --ps -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | grep "galera") ]]; then
                 PAASTA_DB_DRIVER=com.mysql.jdbc.Driver
                 PAASTA_DATABASE=mysql
         fi
-        PAASTA_DB_IP=$(bosh vms -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | cut -f 4 | sed -e 's/ //g')
+        PAASTA_DB_IP=$(bosh vms -d $PAASTA_CORE_DEPLOYMENT_NAME | grep $PAASTA_DATABASE_INSTANCE_NAME | cut -f 4 | head -n 1 | sed -e 's/ //g')
         PAASTA_DB_PORT=$(grep -r "paasta_database_port" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g')
 
 elif [[ ${IS_PAAS_TA_EXTERNAL_DB} = "true" ]]; then
