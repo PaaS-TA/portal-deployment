@@ -93,6 +93,7 @@ instance_groups:
     automaticApproval: ((webuser_automaticapproval))
     ssh_uri: "https://ssh-app.((system_domain))/"
     user_app_size_mb: ((user_app_size))
+    languageList: ((portal_use_language))
 
 properties:
   mariadb:                                                  # MARIA DB SERVER 설정 정보

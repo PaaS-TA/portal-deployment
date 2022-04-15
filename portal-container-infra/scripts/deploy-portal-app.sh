@@ -51,6 +51,13 @@ uaac target uaa.$DOMAIN --skip-ssl-validation
 uaac token client get $UAA_ADMIN_CLIENT_ID -s $UAA_ADMIN_CLIENT_SECRET
 uaac client update $UAAC_PORTAL_CLIENT_ID --redirect_uri "http://portal-web-user."$DOMAIN", http://portal-web-user."$DOMAIN"/callback"
 
+# language list check
+if [[ ${#PORTAL_USE_LANGUAGE[@]} -eq 0 ]]; then
+        echo "Language list dose not exist -> plz check PORTAL_USE_LANGUAGE"
+        return
+fi
+
+PORTAL_USE_LANGUAGE_LIST=$(echo "[\"${PORTAL_USE_LANGUAGE[*]}\"]" | sed 's/ /\",\"/g')
 
 # VARIABLE SETTING
 DOMAIN=$(grep -r "system_domain" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' )
@@ -346,14 +353,36 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type 
 # MONITORING_ENABLE
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<MONITORING_ENABLE>/'${MONITORING_ENABLE}'/g'
 
+# PORTAL_USE_LANGUAGE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE
+>/'${PORTAL_USE_LANGUAGE_LIST}'/g'
 
 # PORTAL WEBUSER MAIN
 BEFORE_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/resources/env/config.json
 AFTER_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config/config.json
 MAIN_JS=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/main.*.js
+LANG_DIR_PATH=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/i18n
 
-BEFORE_FILTER=$(cat ${BEFORE_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' )
-AFTER_FILTER=$(cat ${AFTER_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g')
+BEFORE_LANG=()
+for file in `ls $LANG_DIR_PATH/*`
+do
+        BEFORE_LANG+=(`basename -s ".json" "${file}"`)
+done
+
+AFTER_LANG=$(grep "\[" ${AFTER_CONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
+
+IFS=',' read -r -a AFTER_LANG_LIST <<< "$AFTER_LANG"
+
+for element in ${AFTER_LANG_LIST[@]}
+do
+        if [[ ! ${BEFORE_LANG[@]} =~ ${element} ]]; then
+                echo "\"${element}\" is unsupported language -> plz check PORTAL_USE_LANGUAGE"
+                return
+        fi
+done
+
+BEFORE_FILTER=$(cat ${BEFORE_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' | sed -e 's/, /\",\"/g' | sed -e 's/\"\[/\\[\"/g' | sed -e 's/\]\"/\"\\]/g')
+AFTER_FILTER=$(cat ${AFTER_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,/\",\"/g' | sed -e 's/\"  //g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' | sed -e 's/\"\[/\\[\"/g' | sed -e 's/\]\"/\"\\]/g' | sed -e 's/\" /\"/g')
 
 echo "====================================================="
 echo "BEFORE :: $BEFORE_FILTER"
