@@ -8,9 +8,9 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/qNTS4FF2XP4LNk7/download
-  sha1: 7d47543a97b8e08fda8c6281c3d0a0fc7c24e02a
-  version: "2.5.4"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: https://nextcloud.paas-ta.org/index.php/s/XdbkrKZ4rprrokG/download
+  sha1: a13877e5de7e648d26bf0d90cba2e64f50605dcd
+  version: "2.5.6"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -192,6 +192,7 @@ instance_groups:
     infra:
       admin:
         enable: ((common_api_infra_admin))
+    languageList: ((portal_web_user_language))
 
 - name: paas-ta-portal-storage-api
   azs: ((storage_api_azs))
