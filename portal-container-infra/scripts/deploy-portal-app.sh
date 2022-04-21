@@ -52,12 +52,14 @@ uaac token client get $UAA_ADMIN_CLIENT_ID -s $UAA_ADMIN_CLIENT_SECRET
 uaac client update $UAAC_PORTAL_CLIENT_ID --redirect_uri "http://portal-web-user."$DOMAIN", http://portal-web-user."$DOMAIN"/callback"
 
 # language list check
-if [[ ${#PORTAL_USE_LANGUAGE[@]} -eq 0 ]]; then
-        echo "Language list dose not exist -> plz check PORTAL_USE_LANGUAGE"
+PORTAL_WEB_USER_USE_LANG=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' | sed -e 's/\[//g' | sed -e 's/\]//g')
+
+IFS=',' read -r -a PORTAL_WEB_USER_LANGUAGE <<< "$PORTAL_WEB_USER_USE_LANG"
+
+if [[ ${#PORTAL_WEB_USER_LANGUAGE[@]} -eq 0 ]]; then
+        echo "Language list dose not exist -> portal_web_user_language check plz"
         return
 fi
-
-PORTAL_USE_LANGUAGE_LIST=$(echo "[\"${PORTAL_USE_LANGUAGE[*]}\"]" | sed 's/ /\",\"/g')
 
 # VARIABLE SETTING
 DOMAIN=$(grep -r "system_domain" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' )
@@ -322,6 +324,34 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.ym
 # MAIL_SMTP_PROPERTIES_AUTHURL
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<MAIL_SMTP_PROPERTIES_AUTHURL>/'${MAIL_SMTP_PROPERTIES_AUTHURL}'/g'
 
+# PORTAL_USE_LANGUAGE
+COMMON_API_DIRECTORY=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API
+APP_CONFIG=$COMMON_API_DIRECTORY/manifest.yml
+COMMON_API_UNZIP_PATH=$COMMON_API_DIRECTORY/paas-ta-portal-common-api
+
+unzip -q $COMMON_API_UNZIP_PATH.jar -d $COMMON_API_UNZIP_PATH
+
+EMAIL_DIRECTORY=$COMMON_API_UNZIP_PATH/BOOT-INF/classes/template
+
+ORIGIN_LANG=()
+for lang in `ls $EMAIL_DIRECTORY`
+do
+        ORIGIN_LANG+=(${lang})
+done
+
+rm -rf $COMMON_API_UNZIP_PATH
+
+for element in ${PORTAL_WEB_USER_LANGUAGE[@]}
+do
+        if [[ ! ${ORIGIN_LANG[@]} =~ ${element} ]]; then
+                echo "\"${element}\" is unsupported language -> portal_web_user_language check plz"
+                return
+        fi
+done
+
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE>/'${PORTAL_WEB_USER_USE_LANG}'/g'
+
+
 ## PORTAL-STORAGE-API
 # OBJECTSTORAGE_TENANTNAME
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml -type f | xargs sed -i -e 's/<OBJECTSTORAGE_TENANTNAME>/'${OBJECTSTORAGE_TENANTNAME}'/g'
@@ -369,14 +399,14 @@ do
         BEFORE_LANG+=(`basename -s ".json" "${file}"`)
 done
 
-AFTER_LANG=$(grep "\[" ${AFTER_CONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
+AFTER_LANG=$(grep "languageList" ${AFTER_CONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
 
 IFS=',' read -r -a AFTER_LANG_LIST <<< "$AFTER_LANG"
 
 for element in ${AFTER_LANG_LIST[@]}
 do
         if [[ ! ${BEFORE_LANG[@]} =~ ${element} ]]; then
-                echo "\"${element}\" is unsupported language -> plz check PORTAL_USE_LANGUAGE"
+                echo "\"${element}\" is unsupported language -> portal_web_user_language check plz"
                 return
         fi
 done
