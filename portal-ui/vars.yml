@@ -39,6 +39,5 @@ portal_default_api_name: "PaaS-TA"                                   # ETC : def
 portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
 portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="             # ETC : default header auth
 portal_default_api_desc: "PaaS-TA infra"                     # ETC : default api description (e.g. PaaS-TA {Version} infra)
-portal_use_language: <PORTAL_USE_LANGUAGE>                   # language list to use in portal (e.g. ["ko", "en"])
 apache_limit_request_body: <APACHE limitRequestBody>                     # Apache Limiting Upload File Size Directory / ex> 5000000
 apache_usr_limit_request_body: <APACHE limitRequestBody>                 # Apache Limiting Upload File Size Directory webDir ex> 10240000
