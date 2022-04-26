@@ -70,6 +70,7 @@ instance_groups:
     api:
       url: "((portal_default_api_url))"
     port: 8090
+    languageList: ((portal_web_admin_language))
 
 - name: paas-ta-portal-webuser
   azs: ((webuser_azs))
@@ -93,7 +94,7 @@ instance_groups:
     automaticApproval: ((webuser_automaticapproval))
     ssh_uri: "https://ssh-app.((system_domain))/"
     user_app_size_mb: ((user_app_size))
-    languageList: ((portal_use_language))
+    languageList: ((portal_web_user_language))
 
 properties:
   mariadb:                                                  # MARIA DB SERVER 설정 정보
