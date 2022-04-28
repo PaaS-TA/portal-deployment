@@ -61,14 +61,25 @@ IFS=',' read -r -a PORTAL_WEB_ADMIN_LANG <<< "$PORTAL_WEB_ADMIN_INPUT_LANG"
 PORTAL_WEB_USER_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_USER_LANG[@]}" | sort -u))
 PORTAL_WEB_ADMIN_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_ADMIN_LANG[@]}" | sort -u))
 
+PORTAL_WEB_USER_STR_CHECK=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
+PORTAL_WEB_ADMIN_STR_CHECK=$(grep -r "portal_web_admin_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
+
 if [[ ${#PORTAL_WEB_USER_LANGUAGE[@]} -eq 0 ]]; then
-        echo "Language list dose not exist -> portal_web_user_language check plz"
-        return
+        if [[ "${PORTAL_WEB_USER_STR_CHECK}" != *"["* ]] && [[ "${PORTAL_WEB_USER_STR_CHECK}" != *"]"* ]]; then
+                PORTAL_WEB_USER_LANGUAGE=("ko" "en")
+        else
+                echo "Language list dose not exist -> portal_web_user_language check plz"
+                return
+        fi
 fi
 
 if [[ ${#PORTAL_WEB_ADMIN_LANGUAGE[@]} -eq 0 ]]; then
-        echo "Language list dose not exist -> portal_web_admin_language check plz"
-        return
+        if [[ "${PORTAL_WEB_ADMIN_STR_CHECK}" != *"["* ]] && [[ "${PORTAL_WEB_ADMIN_STR_CHECK}" != *"]"* ]]; then
+                PORTAL_WEB_ADMIN_LANGUAGE=("ko" "en")
+        else
+                echo "Language list dose not exist -> portal_web_admin_language check plz"
+                return
+        fi
 fi
 
 PORTAL_WEB_USER_USE_LANG=$(echo "${PORTAL_WEB_USER_LANGUAGE[*]}" | sed 's/ /,/g')
