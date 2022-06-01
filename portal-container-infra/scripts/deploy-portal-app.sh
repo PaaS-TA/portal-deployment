@@ -2,19 +2,19 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.4 
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/KF2P6FgPpEDps45/download
+PORTALAPPNAME=portal-app-1.2.5 
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/iMtqc6W2bDAR7Bk/download
 
 #########################################
 # Portal Component Folder Name
 PORTAL_API=portal-api-2.4.1
-PORTAL_COMMON_API=portal-common-api-2.2.2
+PORTAL_COMMON_API=portal-common-api-2.2.3
 PORTAL_GATEWAY=portal-gateway-2.1.0
 PORTAL_LOG_API=portal-log-api-2.2.0
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
-PORTAL_WEB_ADMIN=portal-web-admin-2.3.2
-PORTAL_WEB_USER=portal-web-user-2.4.2
+PORTAL_WEB_ADMIN=portal-web-admin-2.3.3
+PORTAL_WEB_USER=portal-web-user-2.4.3
 PORTAL_SSH=portal-ssh-1.0.0
 
 #########################################
