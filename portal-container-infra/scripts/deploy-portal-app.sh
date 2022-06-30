@@ -2,19 +2,19 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.4 
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/RaAwCJLQ99dCxBF/download
+PORTALAPPNAME=portal-app-1.2.5 
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/iMtqc6W2bDAR7Bk/download
 
 #########################################
 # Portal Component Folder Name
 PORTAL_API=portal-api-2.4.1
-PORTAL_COMMON_API=portal-common-api-2.2.2
+PORTAL_COMMON_API=portal-common-api-2.2.3
 PORTAL_GATEWAY=portal-gateway-2.1.0
 PORTAL_LOG_API=portal-log-api-2.2.0
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
-PORTAL_WEB_ADMIN=portal-web-admin-2.3.2
-PORTAL_WEB_USER=portal-web-user-2.4.2
+PORTAL_WEB_ADMIN=portal-web-admin-2.3.3
+PORTAL_WEB_USER=portal-web-user-2.4.3
 PORTAL_SSH=portal-ssh-1.0.0
 
 #########################################
@@ -50,6 +50,40 @@ UAA_ADMIN_CLIENT_SECRET=$(grep -r "uaa_client_admin_secret" $COMMON_VARS_PATH | 
 uaac target uaa.$DOMAIN --skip-ssl-validation
 uaac token client get $UAA_ADMIN_CLIENT_ID -s $UAA_ADMIN_CLIENT_SECRET
 uaac client update $UAAC_PORTAL_CLIENT_ID --redirect_uri "http://portal-web-user."$DOMAIN", http://portal-web-user."$DOMAIN"/callback"
+
+# language list check
+PORTAL_WEB_USER_INPUT_LANG=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' | sed -e 's/\[//g' | sed -e 's/\]//g')
+PORTAL_WEB_ADMIN_INPUT_LANG=$(grep -r "portal_web_admin_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1 | sed -e 's/ //g' | sed -e 's/\"//g' | sed -e 's/\[//g' | sed -e 's/\]//g')
+
+IFS=',' read -r -a PORTAL_WEB_USER_LANG <<< "$PORTAL_WEB_USER_INPUT_LANG"
+IFS=',' read -r -a PORTAL_WEB_ADMIN_LANG <<< "$PORTAL_WEB_ADMIN_INPUT_LANG"
+
+PORTAL_WEB_USER_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_USER_LANG[@]}" | sort -u))
+PORTAL_WEB_ADMIN_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_ADMIN_LANG[@]}" | sort -u))
+
+PORTAL_WEB_USER_STR_CHECK=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
+PORTAL_WEB_ADMIN_STR_CHECK=$(grep -r "portal_web_admin_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
+
+if [[ ${#PORTAL_WEB_USER_LANGUAGE[@]} -eq 0 ]]; then
+        if [[ "${PORTAL_WEB_USER_STR_CHECK}" != *"["* ]] && [[ "${PORTAL_WEB_USER_STR_CHECK}" != *"]"* ]]; then
+                PORTAL_WEB_USER_LANGUAGE=("ko" "en")
+        else
+                echo "Language list dose not exist -> portal_web_user_language check plz"
+                return
+        fi
+fi
+
+if [[ ${#PORTAL_WEB_ADMIN_LANGUAGE[@]} -eq 0 ]]; then
+        if [[ "${PORTAL_WEB_ADMIN_STR_CHECK}" != *"["* ]] && [[ "${PORTAL_WEB_ADMIN_STR_CHECK}" != *"]"* ]]; then
+                PORTAL_WEB_ADMIN_LANGUAGE=("ko" "en")
+        else
+                echo "Language list dose not exist -> portal_web_admin_language check plz"
+                return
+        fi
+fi
+
+PORTAL_WEB_USER_USE_LANG=$(echo "${PORTAL_WEB_USER_LANGUAGE[*]}" | sed 's/ /,/g')
+PORTAL_WEB_ADMIN_USE_LANG=$(echo "${PORTAL_WEB_ADMIN_LANGUAGE[*]}" | sed 's/ /,/g')
 
 
 # VARIABLE SETTING
@@ -219,6 +253,7 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<CF_USER_ADMIN_PASSWORD>/'${CF_USER_ADMIN_PASSWORD}'/g'
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<CF_USER_ADMIN_PASSWORD>/'${CF_USER_ADMIN_PASSWORD}'/g'
 
+
 # UAA_CLIENT_ID
 ## UAA_ADMIN_CLIENT_ID == UAA_CLIENT_ID
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<UAA_CLIENT_ID>/'${UAA_ADMIN_CLIENT_ID}'/g'
@@ -258,6 +293,7 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml
 # PORTAL_DB_USER_PASSWORD
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PORTAL_DB_USER_PASSWORD>/'${PORTAL_DB_USER_PASSWORD}'/g'
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml -type f | xargs sed -i -e 's/<PORTAL_DB_USER_PASSWORD>/'${PORTAL_DB_USER_PASSWORD}'/g'
+
 
 ## PORTAL-API
 # ABACUS_URL(Deprecated)
@@ -315,6 +351,31 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.ym
 # MAIL_SMTP_PROPERTIES_AUTHURL
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<MAIL_SMTP_PROPERTIES_AUTHURL>/'${MAIL_SMTP_PROPERTIES_AUTHURL}'/g'
 
+# PORTAL_USE_LANGUAGE
+COMMON_API_DIRECTORY=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API
+APP_CONFIG=$COMMON_API_DIRECTORY/manifest.yml
+SEARCH_FILTER=$(unzip -q -l ${COMMON_API_DIRECTORY}/paas-ta-portal-common-api.jar | grep "template/" | cut -d "/" -f4 | uniq)
+
+ORIGIN_LANG=()
+for lang in $SEARCH_FILTER
+do
+        if [[ -n "${lang}" ]]; then
+                ORIGIN_LANG+=(${lang})
+        fi
+done
+
+for element in ${PORTAL_WEB_USER_LANGUAGE[@]}
+do
+        if [[ ! ${ORIGIN_LANG[@]} =~ ${element} ]]; then
+                echo "\"${element}\" is unsupported language -> portal_web_user_language check plz"
+                return
+        fi
+done
+
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE>/'${PORTAL_WEB_USER_USE_LANG}'/g'
+
+
+
 ## PORTAL-STORAGE-API
 # OBJECTSTORAGE_TENANTNAME
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml -type f | xargs sed -i -e 's/<OBJECTSTORAGE_TENANTNAME>/'${OBJECTSTORAGE_TENANTNAME}'/g'
@@ -333,6 +394,39 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.y
 
 
 
+## PORTAL-WEBADMIN
+# PORTAL_USE_LANGUAGE
+WEB_ADMIN_DIRECTORY=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN
+APP_CONFIG=$WEB_ADMIN_DIRECTORY/manifest.yml
+SEARCH_FILTER=$(unzip -q -l $WEB_ADMIN_DIRECTORY/paas-ta-portal-webadmin.war | grep "message_" | cut -d "_" -f2)
+BEFORE_LANG_LIST=$(grep "languageList" $APP_CONFIG | sed -e 's/^ *//g')
+
+ORIGIN_LANG=()
+for lang in $SEARCH_FILTER
+do
+        ORIGIN_LANG+=(`basename -s ".properties" "${lang}"`)
+done
+
+for element in ${PORTAL_WEB_ADMIN_LANGUAGE[@]}
+do
+        if [[ ! ${ORIGIN_LANG[@]} =~ ${element} ]]; then
+                echo "\"${element}\" is unsupported language -> portal_web_admin_language check plz"
+                return
+        fi
+done
+
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE>/'${PORTAL_WEB_ADMIN_USE_LANG}'/g'
+
+AFTER_LANG_LIST=$(grep "languageList" $APP_CONFIG | sed -e 's/^ *//g')
+
+echo "====================================================="
+echo "BEFORE :: $BEFORE_LANG_LIST"
+echo "====================================================="
+echo "AFTER  :: $AFTER_LANG_LIST"
+echo "====================================================="
+
+
+
 ## PORTAL-WEBUSER
 # UAAC_PORTAL_CLIENT_ID
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<UAAC_PORTAL_CLIENT_ID>/'${UAAC_PORTAL_CLIENT_ID}'/g'
@@ -346,14 +440,36 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type 
 # MONITORING_ENABLE
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<MONITORING_ENABLE>/'${MONITORING_ENABLE}'/g'
 
+# PORTAL_USE_LANGUAGE
+PORTAL_WEB_USER_USE_LANG_LIST=$(echo "[\"${PORTAL_WEB_USER_LANGUAGE[*]}\"]" | sed 's/ /\",\"/g')
+
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<PORTAL_USE_LANGUAGE>/'${PORTAL_WEB_USER_USE_LANG_LIST}'/g'
 
 # PORTAL WEBUSER MAIN
 BEFORE_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/resources/env/config.json
 AFTER_CONFIG=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config/config.json
 MAIN_JS=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/main.*.js
+LANG_DIR_PATH=$PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/paas-ta-portal-webuser/assets/i18n
 
-BEFORE_FILTER=$(cat ${BEFORE_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' )
-AFTER_FILTER=$(cat ${AFTER_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g')
+BEFORE_LANG=()
+for file in `ls $LANG_DIR_PATH/*`
+do
+        BEFORE_LANG+=(`basename -s ".json" "${file}"`)
+done
+
+AFTER_LANG=$(grep "languageList" ${AFTER_CONFIG} | tr -d '\[' | tr -d '\]' | tr -d '"' | tr -d ' ' | tr -d '\r' | cut -d ":" -f2)
+IFS=',' read -r -a AFTER_LANG_LIST <<< "$AFTER_LANG"
+
+for element in ${AFTER_LANG_LIST[@]}
+do
+        if [[ ! ${BEFORE_LANG[@]} =~ ${element} ]]; then
+                echo "\"${element}\" is unsupported language -> plz check portal_web_user_language"
+                return
+        fi
+done
+
+BEFORE_FILTER=$(cat ${BEFORE_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,  /\",/g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' | sed -e 's/, /\",\"/g' | sed -e 's/\"\[/\\[\"/g' | sed -e 's/\]\"/\"\\]/g')
+AFTER_FILTER=$(cat ${AFTER_CONFIG} | tr -d '{'  |tr -d '\r\n' | tr -d '"' | sed -e 's/: /:\"/g' | sed -e 's/,/\",\"/g' | sed -e 's/\"  //g' | sed -e 's/^ *//g' -e 's/ *$//g' | sed -e 's/}/"/g' | sed -e 's/"false"/!1/g' | sed -e 's/"true"/!0/g'| sed -e 's/\//\\\//g' | sed -e 's/\"\[/\\[\"/g' | sed -e 's/\]\"/\"\\]/g' | sed -e 's/\" /\"/g')
 
 echo "====================================================="
 echo "BEFORE :: $BEFORE_FILTER"
