@@ -2,19 +2,19 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.5 
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/iMtqc6W2bDAR7Bk/download
+PORTALAPPNAME=portal-app-1.2.6 
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/Gckcw7mJw45BRko/download
 
 #########################################
 # Portal Component Folder Name
 PORTAL_API=portal-api-2.4.1
-PORTAL_COMMON_API=portal-common-api-2.2.3
+PORTAL_COMMON_API=portal-common-api-2.2.4
 PORTAL_GATEWAY=portal-gateway-2.1.0
 PORTAL_LOG_API=portal-log-api-2.2.0
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
-PORTAL_WEB_ADMIN=portal-web-admin-2.3.3
-PORTAL_WEB_USER=portal-web-user-2.4.3
+PORTAL_WEB_ADMIN=portal-web-admin-2.3.4
+PORTAL_WEB_USER=portal-web-user-2.4.4
 PORTAL_SSH=portal-ssh-1.0.0
 
 #########################################
@@ -58,8 +58,28 @@ PORTAL_WEB_ADMIN_INPUT_LANG=$(grep -r "portal_web_admin_language" $COMMON_VARS_P
 IFS=',' read -r -a PORTAL_WEB_USER_LANG <<< "$PORTAL_WEB_USER_INPUT_LANG"
 IFS=',' read -r -a PORTAL_WEB_ADMIN_LANG <<< "$PORTAL_WEB_ADMIN_INPUT_LANG"
 
-PORTAL_WEB_USER_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_USER_LANG[@]}" | sort -u))
-PORTAL_WEB_ADMIN_LANGUAGE=($(printf "%s\n" "${PORTAL_WEB_ADMIN_LANG[@]}" | sort -u))
+#WEB_USER_LANG_COMP=($(printf "%s\n" "${PORTAL_WEB_USER_LANG[@]}" /| sort -u))
+#WEB_ADMIN_LANG_COMP=($(printf "%s\n" "${PORTAL_WEB_ADMIN_LANG[@]}" | sort -u))
+
+PORTAL_WEB_USER_LANGUAGE=()
+for lang in ${PORTAL_WEB_USER_LANG[@]}
+do
+        if [[ ! ${PORTAL_WEB_USER_LANGUAGE[@]} =~ ${lang} ]]; then
+                PORTAL_WEB_USER_LANGUAGE+=($lang)
+        fi
+done
+
+PORTAL_WEB_ADMIN_LANGUAGE=()
+for lang in ${PORTAL_WEB_ADMIN_LANG[@]}
+do
+        if [[ ! ${PORTAL_WEB_ADMIN_LANGUAGE[@]} =~ ${lang} ]]; then
+                PORTAL_WEB_ADMIN_LANGUAGE+=($lang)
+        fi
+done
+
+echo "포탈 유저 언어 목록 :: ${PORTAL_WEB_USER_LANGUAGE[@]}"
+echo "포탈 어드민 언어 목록 :: ${PORTAL_WEB_ADMIN_LANGUAGE[@]}"
+
 
 PORTAL_WEB_USER_STR_CHECK=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
 PORTAL_WEB_ADMIN_STR_CHECK=$(grep -r "portal_web_admin_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
