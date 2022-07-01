@@ -77,9 +77,6 @@ do
         fi
 done
 
-echo "포탈 유저 언어 목록 :: ${PORTAL_WEB_USER_LANGUAGE[@]}"
-echo "포탈 어드민 언어 목록 :: ${PORTAL_WEB_ADMIN_LANGUAGE[@]}"
-
 
 PORTAL_WEB_USER_STR_CHECK=$(grep -r "portal_web_user_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
 PORTAL_WEB_ADMIN_STR_CHECK=$(grep -r "portal_web_admin_language" $COMMON_VARS_PATH | cut -d ':' -f 2 | cut -d '#' -f 1 | cut -f 1)
