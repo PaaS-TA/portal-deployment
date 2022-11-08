@@ -32,7 +32,6 @@ instance_groups:
   jobs:
   - name: mariadb
     release: paasta-portal-ui-release
-  syslog_aggregator: null
 
 - name: haproxy
   azs: ((haproxy_azs))
@@ -46,7 +45,6 @@ instance_groups:
   jobs:
   - name: haproxy
     release: paasta-portal-ui-release
-  syslog_aggregator: null
   properties:
     infra:
       admin:
@@ -64,7 +62,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-webadmin
     release: paasta-portal-ui-release
-  syslog_aggregator: null
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     api:
@@ -82,7 +79,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-webuser
     release: paasta-portal-ui-release
-  syslog_aggregator: null
   properties:
     logPath: "/var/vcap/sys/log/paas-ta-portal-webuser"     # WEBUSER는 아파치를 사용함, APACHE 로그 위치
     webDir: "/var/vcap/packages/apache2/htdocs"             # WEBUSER는 아파치를 사용함, APACHE 웹 디렉토리 설정
