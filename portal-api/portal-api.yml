@@ -235,7 +235,6 @@ instance_groups:
         api:
           url: "https://api.((system_domain))"
           uaaUrl: "https://uaa.((system_domain))"
-          sslSkipValidation: true
       user: # CloudFoundry Login information
         admin:
           username: ((paasta_admin_username))
@@ -245,10 +244,6 @@ instance_groups:
           clientSecret: login-secret
           adminClientId: ((uaa_client_admin_id))
           adminClientSecret: ((uaa_client_admin_secret))
-          loginClientId: login
-          loginClientSecret: login-secret
-          skipSSLValidation: true
-      authorization: cf-Authorization
     infra:
       admin:
         enable: ((log_api_infra_admin))
