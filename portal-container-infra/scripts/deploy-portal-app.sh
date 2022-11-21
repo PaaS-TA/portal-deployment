@@ -2,19 +2,19 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.8 
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/r9pZ8Nq4wPecLNW/download
+PORTALAPPNAME=portal-app-1.2.9 
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/ab3MJJbkKm9FsjJ/download
 
 #########################################
 # Portal Component Folder Name
-PORTAL_API=portal-api-2.4.1
+PORTAL_API=portal-api-2.4.2
 PORTAL_COMMON_API=portal-common-api-2.2.5
 PORTAL_GATEWAY=portal-gateway-2.1.1
 PORTAL_LOG_API=portal-log-api-2.3.0
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
-PORTAL_WEB_ADMIN=portal-web-admin-2.3.4
-PORTAL_WEB_USER=portal-web-user-2.4.5
+PORTAL_WEB_ADMIN=portal-web-admin-2.3.5
+PORTAL_WEB_USER=portal-web-user-2.4.6
 PORTAL_SSH=portal-ssh-1.0.0
 
 #########################################
@@ -252,14 +252,16 @@ fi
 
 ## COMMON VARIABLE
 # DOMAIN
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_GATEWAY/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_REGISTRATION/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
-find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<SYSTEM_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_GATEWAY/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<SYSTEM_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_REGISTRATION/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<APP_DOMAIN>/'${DOMAIN}'/g'
 
 
 # CF_USER_ADMIN_USERNAME
@@ -317,6 +319,8 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<ABACUS_URL>/'${ABACUS_URL}'/g'
 # MONITORING_API_URL
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<MONITORING_API_URL>/'${MONITORING_API_URL}'/g'
+# API_TYPE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml -type f | xargs sed -i -e 's/<API_TYPE>/ap/g'
 
 
 ## PORTAL-COMMON-API
@@ -456,6 +460,13 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type 
 
 # MONITORING_ENABLE
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<MONITORING_ENABLE>/'${MONITORING_ENABLE}'/g'
+
+# SSH_ENABLE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<SSH_ENABLE>/'${SSH_ENABLE}'/g'
+
+# TAIL_LOG_INTERVAL
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/config -type f | xargs sed -i -e 's/<TAIL_LOG_INTERVAL>/'${TAIL_LOG_INTERVAL}'/g'
+
 
 # PORTAL_USE_LANGUAGE
 PORTAL_WEB_USER_USE_LANG_LIST=$(echo "[\"${PORTAL_WEB_USER_LANGUAGE[*]}\"]" | sed 's/ /\",\"/g')
