@@ -2,19 +2,19 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.7 
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/QtM9Wbc4irYPAjy/download
+PORTALAPPNAME=portal-app-1.2.8 
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/r9pZ8Nq4wPecLNW/download
 
 #########################################
 # Portal Component Folder Name
 PORTAL_API=portal-api-2.4.1
 PORTAL_COMMON_API=portal-common-api-2.2.5
-PORTAL_GATEWAY=portal-gateway-2.1.0
-PORTAL_LOG_API=portal-log-api-2.2.0
+PORTAL_GATEWAY=portal-gateway-2.1.1
+PORTAL_LOG_API=portal-log-api-2.3.0
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
 PORTAL_WEB_ADMIN=portal-web-admin-2.3.4
-PORTAL_WEB_USER=portal-web-user-2.4.4
+PORTAL_WEB_USER=portal-web-user-2.4.5
 PORTAL_SSH=portal-ssh-1.0.0
 
 #########################################
@@ -234,7 +234,7 @@ if [ -d $PORTALAPPNAME ]; then
 fi
 ## portal-app unzip
 echo "portal-app unzip"
-unzip $PORTALAPPNAME.zip
+unzip -q $PORTALAPPNAME.zip
 
 #########################################
 #config change

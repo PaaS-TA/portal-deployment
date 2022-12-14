@@ -8,9 +8,9 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/DDxcPDN7RoXmRrX/download
-  sha1: eef5850ed52cf2682ca035f08f7b48d9cf7e0a7a
-  version: "2.5.9"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: https://nextcloud.paas-ta.org/index.php/s/GiKm67pjZ3mRP2m/download
+  sha1: 3e5af30ce706d3fa07ef7f89cc4a38be83d0faf1
+  version: "2.5.10"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -32,7 +32,6 @@ instance_groups:
   jobs:
   - name: mariadb
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
 
 - name: haproxy
   azs: ((haproxy_azs))
@@ -46,7 +45,6 @@ instance_groups:
   jobs:
   - name: haproxy
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
   properties:
     infra:
       admin:
@@ -63,7 +61,6 @@ instance_groups:
   jobs:
   - name: binary_storage
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
 
 
 ######## WEB SERVICE ########
@@ -78,7 +75,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-gateway
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
 
@@ -92,7 +88,8 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-registration
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
+    provides:
+      paas-ta-portal-registration-link: {as: portal-registration, shared: true}
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     infra:
@@ -111,7 +108,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-api
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
   properties:
     java_opts: "-Xmx900m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     cloudfoundry:
@@ -152,7 +148,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-common-api
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     datasource:
@@ -204,7 +199,6 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-storage-api
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     objectStorage:
@@ -234,7 +228,8 @@ instance_groups:
   jobs:
   - name: paas-ta-portal-log-api
     release: "paasta-portal-api-release"
-  syslog_aggregator: null
+    consumes:
+      influxdb: nil
   properties:
     java_opts: "-Xmx450m -Xss1M -XX:MaxMetaspaceSize=93382K -XX:ReservedCodeCacheSize=240m -XX:+UseCompressedOops -Djdk.tls.ephemeralDHKeySize=2048 -Dfile.encoding=UTF-8 -XX:+UseConcMarkSweepGC -XX:SoftRefLRUPolicyMSPerMB=50 -Dsun.io.useCanonCaches=false -Djava.net.preferIPv4Stack=true -XX:+HeapDumpOnOutOfMemoryError -XX:-OmitStackTraceInFastThrow -Xverify:none -XX:ErrorFile=/var/vcap/sys/log/java_error_in_idea_%p.log -XX:HeapDumpPath=/var/vcap/sys/log/java_error_in_idea.hprof"
     cloudfoundry:
@@ -242,7 +237,6 @@ instance_groups:
         api:
           url: "https://api.((system_domain))"
           uaaUrl: "https://uaa.((system_domain))"
-          sslSkipValidation: true
       user: # CloudFoundry Login information
         admin:
           username: ((paasta_admin_username))
@@ -252,10 +246,6 @@ instance_groups:
           clientSecret: login-secret
           adminClientId: ((uaa_client_admin_id))
           adminClientSecret: ((uaa_client_admin_secret))
-          loginClientId: login
-          loginClientSecret: login-secret
-          skipSSLValidation: true
-      authorization: cf-Authorization
     infra:
       admin:
         enable: ((log_api_infra_admin))
