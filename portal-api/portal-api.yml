@@ -8,9 +8,9 @@ stemcells:
 
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/GiKm67pjZ3mRP2m/download
-  sha1: 3e5af30ce706d3fa07ef7f89cc4a38be83d0faf1
-  version: "2.5.10"                                            # 서비스 릴리즈 버전(필수):latest 시 업로드된 서비스 릴리즈 최신버전
+  url: https://nextcloud.paas-ta.org/index.php/s/NZm634TRTsFDDr3/download
+  sha1: 3fba3f0c86ae42d8395045e933bcca728bff857e
+  version: "2.5.11" 
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
@@ -115,6 +115,7 @@ instance_groups:
         api:
           url: "https://api.((system_domain))"
           uaaUrl: "https://uaa.((system_domain))"
+          logCacheUrl: "https://log-cache.((system_domain))"
           sslSkipValidation: true
       user: # CloudFoundry Login information
         admin:

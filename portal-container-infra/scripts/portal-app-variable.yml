@@ -9,6 +9,8 @@ PORTAL_APP_WORKING_DIRECTORY=~/workspace/portal-deployment/portal-container-infr
 ##PORTAL VARIABLE
 USER_APP_SIZE_MB=0					# USER My App size(MB), if value==0 -> unlimited
 MONITORING_ENABLE=false					# Monitoring Enable Option
+SSH_ENABLE=true						# SSH Enable Option
+TAIL_LOG_INTERVAL=250					# tail log interval (ms)
 
 PORTAL_ORG_NAME="portal"				# PaaS-TA Portal Org Name
 PORTAL_SPACE_NAME="system"				# PaaS-TA Portal Space Name
