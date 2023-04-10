@@ -8,9 +8,9 @@ stemcells:
 
 releases:
 - name: paasta-portal-ui-release                          # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
-  url: https://nextcloud.paas-ta.org/index.php/s/aadb9HX6S63JX2n/download
-  sha1: 774a47c8c2076a3f53c4289b9328ab4740511092
-  version: "2.5.11"
+  url: https://nextcloud.paas-ta.org/index.php/s/YxGMeQS9xddPidz/download
+  sha1: 115c4d312fd716e6cc59918d76d6e7ba54a0e01e
+  version: "2.5.12"
 
 update:
   canaries: 1                                               # canary 인스턴스 수(필수)
