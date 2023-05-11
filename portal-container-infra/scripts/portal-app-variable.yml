@@ -34,6 +34,7 @@ PORTAL_WEB_USER_INSTANCE=1				# PORTAL-WEB-USER INSTANCES
 
 
 ##UNCHANGE VARIABLE(if defulat install, don't change variable)
+PAASTA_DEPLOYMENT_TYPE="ap"       # PaaS TA Deployment Type
 PAASTA_CORE_DEPLOYMENT_NAME="paasta"			# PaaS TA AP Deployment Name
 PORTAL_INFRA_DEPLOYMENT_NAME="portal-container-infra"	# Portal Container Infra Deployment Name
 PAASTA_DATABASE_INSTANCE_NAME="database"		# PaaS TA AP Database Instance Name

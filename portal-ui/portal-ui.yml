@@ -91,6 +91,7 @@ instance_groups:
     ssh_uri: "https://ssh-app.((system_domain))/"
     ssh_enable: ((ssh_enable))
     user_app_size_mb: ((user_app_size))
+    paastaType: ((paasta_deployment_type))
     languageList: ((portal_web_user_language))
 
 properties:
