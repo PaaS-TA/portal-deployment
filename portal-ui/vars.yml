@@ -1,6 +1,6 @@
 # STEMCELL INFO
-stemcell_os: "ubuntu-bionic"                                             # stemcell os
-stemcell_version: "1.188"                                               # stemcell version
+stemcell_os: "ubuntu-jammy"                                             # stemcell os
+stemcell_version: "1.102"                                               # stemcell version
 
 # NETWORKS INFO
 private_networks_name: "default"                                         # private network name
@@ -36,6 +36,7 @@ user_app_size: 0                                                         # webus
 ssh_enable: true                                                         # webuser : ssh 사용 여부, true or false
 
 # ETC INFO
+paasta_deployment_type: "ap"                                         # ETC : Paas-TA deployment type (ap, sidecar)
 portal_default_api_name: "PaaS-TA"                                   # ETC : default api name (e.g. PaaS-TA {Version})
 portal_default_api_url: "http://<PORTAL-API-HAPROXY-PUBLIC-IP>:2225"     # ETC : default api url
 portal_default_header_auth: "Basic YWRtaW46b3BlbnBhYXN0YQ=="             # ETC : default header auth

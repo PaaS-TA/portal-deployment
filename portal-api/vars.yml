@@ -1,6 +1,6 @@
 # STEMCELL INFO
-stemcell_os: "ubuntu-bionic"                                    # stemcell os
-stemcell_version: "1.188"                                      # stemcell version
+stemcell_os: "ubuntu-jammy"                                     # stemcell os
+stemcell_version: "1.102"                                       # stemcell version
 
 # NETWORKS INFO
 private_networks_name: "default"                                # private network name
@@ -63,9 +63,19 @@ storage_api_infra_admin: false                                  # portal-storage
 
 # PORTAL_LOG_API INFO
 log_api_azs: [z6]                                               # portal-log-api : azs
-log_api_instances: 1                                            # portal-log-api : instances (1)
+log_api_instances: 0                                            # portal-log-api : instances (1)
 log_api_vm_type: "small"                                        # portal-log-api : vm type
 log_api_infra_admin: false                                      # portal-log-api : infra admin (default "false")
+
+log_api_influxdb_ip: "<LOG_API_INFLUXDB_IP>"                    # portal-log-api : InfluxDB IP
+log_api_influxdb_http_port: "8086"                              # portal-log-api : InfluxDB HTTP PORT (default 8086)
+log_api_influxdb_username: "<INFLUXDB_USERNAME>"                # portal-log-api : InfluxDB Admin 계정 Username
+log_api_influxdb_password: "<INFLUXDB_PASSWORD>"                # portal-log-api : InfluxDB Admin 계정 Password
+log_api_influxdb_https_enabled: true                            # portal-log-api : InfluxDB HTTPS 설정 (default "true")
+
+log_api_influxdb_database: "<INFLUXDB_DATABASE>"                # portal-log-api : InfluxDB Database명
+log_api_influxdb_measurement: "<INFLUXDB_MEASUREMENT>"          # portal-log-api : InfluxDB Measurement명
+log_api_influxdb_query_limit: "<INFLUXDB_QUERY_LIMIT>"          # portal-log-api : InfluxDB query limit (default "50")
 
 # MAIL_SMTP INFO
 mail_smtp_host: "<MAIL_SMTP_HOST>"                              # mail-smtp : host (e.g. "smtp.gmail.com")
@@ -76,4 +86,4 @@ mail_smtp_useremail: "<MAIL_SMTP_USER_EMAIL>"                   # mail-smtp : us
 mail_smtp_properties_auth: "true"                               # mail-smtp : properties auth
 mail_smtp_properties_starttls_enable: "true"                    # mail-smtp : properties starttls enable
 mail_smtp_properties_starttls_required: "true"                  # mail-smtp : properties starttls required
-mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"    # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")
+mail_smtp_properties_subject: "<MAIL_SMTP_PROPERTIES_SUBJECT>"  # mail-smtp : properties subject (e.g. "PaaS-TA User Potal")

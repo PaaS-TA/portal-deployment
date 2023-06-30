@@ -34,6 +34,7 @@ PORTAL_WEB_USER_INSTANCE=1				# PORTAL-WEB-USER INSTANCES
 
 
 ##UNCHANGE VARIABLE(if defulat install, don't change variable)
+PAASTA_DEPLOYMENT_TYPE="ap"                             # PaaS TA Deployment Type
 PAASTA_CORE_DEPLOYMENT_NAME="paasta"			# PaaS TA AP Deployment Name
 PORTAL_INFRA_DEPLOYMENT_NAME="portal-container-infra"	# Portal Container Infra Deployment Name
 PAASTA_DATABASE_INSTANCE_NAME="database"		# PaaS TA AP Database Instance Name
@@ -60,4 +61,12 @@ PORTAL_EXTERNAL_STORAGE_TENANTNAME=			# Portal External Storage Tenant Name
 PORTAL_EXTERNAL_STORAGE_USERNAME=			# Portal External Storage Username
 PORTAL_EXTERNAL_STORAGE_PASSWORD=			# Portal External Storage Password
 
-
+USE_LOGGING_SERVICE=false                               # (true or false)
+LOGGING_INFLUXDB_IP=10.0.1.115                          # Logging Service InfluxDB IP
+LOGGING_INFLUXDB_PORT=8086                              # Logging Service InfluxDB HTTP PORT
+LOGGING_INFLUXDB_USERNAME="admin"                       # Logging Service InfluxDB Username
+LOGGING_INFLUXDB_PASSWORD="PaaS-TA2022"                 # Logging Service InfluxDB Password
+LOGGING_INFLUXDB_DATABASE="logging_db"                  # Logging Service InfluxDB DB Name
+LOGGING_INFLUXDB_MEASUREMNET="logging_measurement"      # Logging Service InfluxDB Measurement Name
+LOGGING_INFLUXDB_LIMIT=50                               # Logging Service InfluxDB query limit
+LOGGING_INFLUXDB_HTTPS_ENABLED=false                    # (true or false)
