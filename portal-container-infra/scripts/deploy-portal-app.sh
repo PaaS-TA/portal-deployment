@@ -2,15 +2,15 @@
 
 source portal-app-variable.yml
 
-PORTALAPPNAME=portal-app-1.2.12
-PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/WrfpBniYbX8sSm5/download
+PORTALAPPNAME=portal-app-1.2.13
+PORTALAPPDOWNLOADLINK=https://nextcloud.paas-ta.org/index.php/s/6aanBz8osifGnQZ/download
 
 #########################################
 # Portal Component Folder Name
 PORTAL_API=portal-api-2.4.3
 PORTAL_COMMON_API=portal-common-api-2.2.6
-PORTAL_GATEWAY=portal-gateway-2.1.1
-PORTAL_LOG_API=portal-log-api-2.3.1
+PORTAL_GATEWAY=portal-gateway-2.1.2
+PORTAL_LOG_API=portal-log-api-2.3.2
 PORTAL_REGISTRATION=portal-registration-2.1.0
 PORTAL_STORAGE_API=portal-storage-api-2.2.1
 PORTAL_WEB_ADMIN=portal-web-admin-2.3.5
@@ -397,6 +397,38 @@ find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.ym
 
 
 
+## PORTAL-LOG-API
+# LOGGING_INFLUXDB_IP
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_IP>/'${LOGGING_INFLUXDB_IP}'/g'
+
+# LOGGING_INFLUXDB_PORT
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_PORT>/'${LOGGING_INFLUXDB_PORT}'/g'
+
+# LOGGING_INFLUXDB_USERNAME
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_USERNAME>/'${LOGGING_INFLUXDB_USERNAME}'/g'
+
+# LOGGING_INFLUXDB_PASSWORD
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_PASSWORD>/'${LOGGING_INFLUXDB_PASSWORD}'/g'
+
+# LOGGING_INFLUXDB_DATABASE
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_DATABASE>/'${LOGGING_INFLUXDB_DATABASE}'/g'
+
+# LOGGING_INFLUXDB_MEASUREMENT
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_MEASUREMENT>/'${LOGGING_INFLUXDB_MEASUREMNET}'/g'
+
+# LOGGING_INFLUXDB_LIMIT
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_LIMIT>/'${LOGGING_INFLUXDB_LIMIT}'/g'
+
+# LOGGING_INFLUXDB_HTTPS_ENABLED
+find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/<LOGGING_INFLUXDB_HTTPS_ENABLED>/'${LOGGING_INFLUXDB_HTTPS_ENABLED}'/g'
+
+# LOGGING_INFLUXDB_URL
+if [[ ${LOGGING_INFLUXDB_HTTPS_ENABLED} = false ]]; then
+        find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml -type f | xargs sed -i -e 's/influxdb_url: https/influxdb_url: http/g'
+fi
+
+
+
 ## PORTAL-STORAGE-API
 # OBJECTSTORAGE_TENANTNAME
 find $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml -type f | xargs sed -i -e 's/<OBJECTSTORAGE_TENANTNAME>/'${OBJECTSTORAGE_TENANTNAME}'/g'
@@ -549,43 +581,16 @@ cf bind-staging-security-group ${PORTAL_SECURITY_GROUP_NAME}
 cf push -i $PORTAL_API_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_API/manifest.yml
 cf push -i $PORTAL_COMMON_API_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_COMMON_API/manifest.yml
 cf push -i $PORTAL_GATEWAY_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_GATEWAY/manifest.yml
-cf push -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml
 cf push -i $PORTAL_REGISTRATION_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_REGISTRATION/manifest.yml
 cf push -i $PORTAL_STORAGE_API_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_STORAGE_API/manifest.yml
 cf push -i $PORTAL_WEB_ADMIN_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_ADMIN/manifest.yml
 cf push -i $PORTAL_WEB_USER_INSTANCE -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_WEB_USER/manifest.yml
 cf push -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_SSH/manifest.yml
 
+if [[ ${use_logging_service} = true ]]; then
+        cf push -f $PORTAL_APP_WORKING_DIRECTORY/$PORTALAPPNAME/$PORTAL_LOG_API/manifest.yml
+fi
 
-# tcp port open : portal-log-api
-# find APP_GUID
-APP_GUID=$(cf app portal-log-api --guid)
-echo "$APP_GUID"
-
-# create tcp domain
-cf create-shared-domain tail-log.$DOMAIN --router-group default-tcp
-
-# listen port 5555
-cf curl /v2/apps/$APP_GUID -X PUT -d '{"ports": [8080, 5555]}'
-
-# map-route tcp 1024
-cf map-route portal-log-api tail-log.$DOMAIN --port 1024
-
-# find port 1122 ROUTE_GUID
-ROUTE_GUID=$(cf curl /v2/routes?q=port:1024 | grep \"guid\" | awk -F \" '{ print $4 }')
-echo "$ROUTE_GUID"
-
-# find route_mapping default port 8080
-DEFAULT_ROUTE_GUID=$(cf curl /v2/routes/$ROUTE_GUID/route_mappings | grep \"guid\" | awk -F \" '{ print $4 }')
-echo "$DEFAULT_ROUTE_GUID"
-
-# delete route_mapping default port 8080
-cf curl /v2/route_mappings/$DEFAULT_ROUTE_GUID -X DELETE -d ''
-
-# add route_mapping app_port 5555
-cf curl /v2/route_mappings -X POST -d '{"app_guid": "'"$APP_GUID"'", "route_guid": "'"$ROUTE_GUID"'", "app_port": 5555}'
-
-cf restart portal-log-api
 
 cf apps
 

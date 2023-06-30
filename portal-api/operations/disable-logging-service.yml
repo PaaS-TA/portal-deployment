@@ -1,0 +1,4 @@
+---
+
+- type: remove
+  path: /instance_groups/name=paas-ta-portal-log-api
