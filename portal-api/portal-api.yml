@@ -9,7 +9,7 @@ stemcells:
 releases:
 - name: "paasta-portal-api-release"                         # 서비스 릴리즈 이름(필수) bosh releases로 확인 가능
   url: https://nextcloud.paas-ta.org/index.php/s/QQ7QL9GGK5FgLbY/download
-  sha1: 1665ecc739f51b5013d888e610ea98f25e3d4886
+  sha1: 2d714604a8b74718feace9ddf38f3579ca2b32cf
   version: "2.5.18"
 
 update:
